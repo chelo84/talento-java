@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  		<link href="../main.css" rel="stylesheet" type="text/css" th:href="@{/main.css}" />
+		<title>Sistema de Vendas</title>
+	</head>
+	<body style="background-color: #F5F5F5;">
+		<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+		  <a class="navbar-brand" href="#">TesteJava</a>
+		  <ul class="navbar-nav">
+		    <li class="nav-item">
+		      <a class="nav-link active bg-grey" href="/">Pedidos de Hoje</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#">Todos Pedidos</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" href="#">Fornecedor</a>
+		    </li>
+		  </ul>
+		</nav>
+
+		<div class="container text-center">
+			<h1 class="text-center" style="font-weight: bold">Pedidos de hoje</h1>
+			
+			<table class="table table-bordered table-hover">
+				<thead class="thead-dark"  style="border-width:5px;">
+			      <tr>
+			      	<th colspan="3" class="text-center">Livro</th>
+			      	<th colspan="3" class="text-center">Cliente</th>
+			      </tr>
+			      <tr class="text-center">
+			      <th>Título</th>
+			      <th>Preço</th>
+			      <th style="max-width: 65px;"><abbr title="Quantidade">Qtd</abbr></th>
+			      <th>Nome Completo</th>
+			      <th>Telefone</th>
+			      <th>E-mail</th>
+			    </thead>
+	   			<th:block th:if="${!pedidosDeHoje.isEmpty()}" th:each="pedido : ${pedidosDeHoje}">
+	      			<tr class="text-center">
+	         			<td th:text="${pedido.livro.titulo}">...</td>
+	         			<td style="width: 105px" th:text="'R$ '+ ${pedido.precoUnitario}">...</td>
+	         			<td style="width: 80px" th:text="${pedido.quantidade}">...</td>
+	         			<td th:text="${pedido.cliente.nome} +' '+ ${pedido.cliente.sobrenome}">...</td>
+	         			<td style="width: 120px" th:text="${pedido.cliente.telefone}">...</td>
+	         			<td th:text="${pedido.cliente.email}">...</td>
+	      			</tr>
+	   			</th:block>
+				<tr th:if="${pedidosDeHoje.isEmpty()}">
+	   				<td class="text-center" colspan="6">Nenhum pedido atualmente</td>
+	   			</tr>
+	   			<tr>
+	   				<td class="text-center" colspan="6">
+	   					<a class="btn btn-primary" style="cursor: pointer; color: white;">
+	   					<i class="fa fa-plus"></i>  Novo Pedido
+	   					</a>
+	   				</td>
+	   			</tr>
+			</table>
+			<form method="POST" th:action="@{/fornecedor/enviar-pedidos}">
+				<button type="submit" name="submit" class="btn btn-success pill-btn" style="border-radius: 23px;">
+				<i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i>  Enviar ao fornecedor
+				</button>			
+        	</form>
+		</div>
+	</body>
+</html>
