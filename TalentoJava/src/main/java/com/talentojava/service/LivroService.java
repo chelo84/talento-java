@@ -12,7 +12,7 @@ public class LivroService {
 	private LivroRepository livros;
 	
 	public Livro novoLivro(Livro livro) {
-		return (this.existe(livro)) ? this.find(livro) : livros.save(livro);
+		return (this.existe(livro)) ? this.find(livro) : livros.saveAndFlush(livro);
 	}
 
 	public boolean existe(Livro livro) {

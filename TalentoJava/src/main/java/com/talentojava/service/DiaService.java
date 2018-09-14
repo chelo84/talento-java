@@ -27,6 +27,6 @@ public class DiaService {
 	}
 	
 	public Dia save(Dia dia) {
-		return dias.save(dia);
+		return dias.saveAndFlush(dia);
 	}
 }

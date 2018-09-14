@@ -13,3 +13,22 @@ table.table-bordered > tbody > tr > td{
     max-width: 120px;
     word-wrap:break-word;
 }
+
+.novo-pedido-row {
+	display: flex;
+}
+
+.novo-pedido-col {
+	flex: 1;
+	
+	padding: 1em;
+	border: 1px solid;
+}
+
+.form-control {
+	margin: 2mm;
+}
+
+div div p .error {
+	color: red;
+}

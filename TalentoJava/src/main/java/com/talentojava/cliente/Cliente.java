@@ -4,15 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.Valid;
 
 @Entity
 public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Valid
 	private String nome;
+	@Valid
 	private String sobrenome;
+	@Valid
 	private String telefone;
+	@Valid
 	private String email;
 	
 	public Long getId() {

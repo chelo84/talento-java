@@ -12,7 +12,7 @@ public class ClienteService {
 	ClienteRepository clientes;
 	
 	public Cliente novoCliente(Cliente cliente) {
-		return (this.existe(cliente)) ? this.find(cliente) : clientes.save(cliente);
+		return clientes.saveAndFlush(cliente);
 	}
 	
 	public boolean existe(Cliente cliente) {
