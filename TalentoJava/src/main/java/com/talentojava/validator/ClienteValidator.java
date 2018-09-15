@@ -26,6 +26,7 @@ public class ClienteValidator implements Validator{
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cliente.sobrenome", "NotEmpty.cliente.sobrenome");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cliente.telefone", "NotEmpty.cliente.telefone");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cliente.email", "NotEmpty.cliente.email");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cliente.endereco", "NotEmpty.cliente.endereco");
         
 		if(!emailValidator.valid(cli.getEmail())){
 			errors.rejectValue("cliente.email", "Invalid.cliente.email");

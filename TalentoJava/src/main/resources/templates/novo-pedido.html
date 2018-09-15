@@ -21,7 +21,7 @@
 		      <a class="nav-link" href="#">Todos Pedidos</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link" href="#">Fornecedor</a>
+		      <a class="nav-link" href="/fornecedor">Fornecedor</a>
 		    </li>
 		  </ul>
 		</nav>
@@ -46,6 +46,8 @@
 			  	<input type="text" th:field="*{telefone}" name="telefone" class="form-control" placeholder="Telefone" aria-label="Telefone">
 			  	<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
 			  	<input type="text" th:field="*{email}" name="email" class="form-control" placeholder="Email" aria-label="Email">
+			  	<p th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}" class="text-danger"></p>
+			  	<input type="text" th:field="*{endereco}" name="endereco" class="form-control" placeholder="Endereço Ex:Cidade, Bairro, nº, Cmpl" aria-label="Endereço">
 			  </div>
 			</div>
 			<div class="container text-center">

@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
 
 import com.talentojava.cliente.Cliente;
 import com.talentojava.dia.Dia;
@@ -31,7 +37,6 @@ import com.talentojava.validator.PedidoFormValidator;
 public class VendaController {
 	@Autowired
 	private DiaService dias;
-	
 	@Autowired
 	private LivroService livros;
 	@Autowired
@@ -78,12 +83,30 @@ public class VendaController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "hoje/enviar-pedidos", method = RequestMethod.POST)
+	public String enviarPedidos() {
+		Dia hoje = this.getHoje();
+		RestTemplate rt = new RestTemplate();
+		HttpEntity<Dia> request = new HttpEntity<>(hoje);
+		ResponseEntity<String> response = null;
+		try {
+			response = rt.exchange("http://localhost:8080/fornecedor/enviar-pedidos", HttpMethod.POST, request, String.class);
+			hoje.setHoje(false);
+			dias.save(hoje);
+			return "redirect:/fornecedor";
+		} catch (HttpStatusCodeException err) {
+			System.err.println("ErrCode: "+ err.getStatusCode());
+		}
+		
+		return "redirect:/";
+	}
+	
 	@ModelAttribute("hoje")
 	public Dia getHoje() {
 	    return dias.findHoje();
 	}
 	@ModelAttribute("pedidosDeHoje")
-	public List<Pedido> getPedidos() {
+	public List<Pedido> getPedidosDeHoje() {
 		return getHoje().getPedidos();
 	}
 }
