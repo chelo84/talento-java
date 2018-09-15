@@ -11,14 +11,11 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Valid
 	private String nome;
-	@Valid
 	private String sobrenome;
-	@Valid
 	private String telefone;
-	@Valid
 	private String email;
+	private String endereco;
 	
 	public Long getId() {
 		return id;
@@ -58,5 +55,13 @@ public class Cliente {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 }
