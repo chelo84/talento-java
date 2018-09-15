@@ -1,13 +1,13 @@
 package com.talentojava.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.talentojava.cliente.Cliente;
 import com.talentojava.dia.Dia;
@@ -71,7 +72,7 @@ public class VendaController {
 	}
 	
 	@RequestMapping(value = "hoje/novo-pedido", method = RequestMethod.POST)
-	public String novoPedidoPost(@ModelAttribute @Validated PedidoForm pedidoForm, BindingResult result, Model model) {
+	public String novoPedidoPost(@ModelAttribute @Validated PedidoForm pedidoForm, BindingResult result, Model model, RedirectAttributes ra) {
 		if (result.hasErrors()) {
 			return "novo-pedido.html";
 		}
@@ -88,11 +89,12 @@ public class VendaController {
 		p.setQuantidade(Integer.parseInt((pedidoForm.getQuantidade())));
 		p = pedidos.novoPedido(p);
 		
+		ra.addFlashAttribute("novoPedido", p);
 		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "hoje/enviar-pedidos", method = RequestMethod.POST)
-	public String enviarPedidos() {
+	public String enviarPedidos(RedirectAttributes ra) {
 		Dia hoje = this.getHoje();
 		RestTemplate rt = new RestTemplate();
 		HttpEntity<Dia> request = new HttpEntity<>(hoje);
@@ -101,6 +103,10 @@ public class VendaController {
 			response = rt.exchange("http://localhost:8080/fornecedor/enviar-pedidos", HttpMethod.POST, request, String.class);
 			hoje.setHoje(false);
 			dias.save(hoje);
+			
+			List<Long> novosPedidosIds = new ArrayList<>();
+			hoje.getPedidos().forEach(pedido -> novosPedidosIds.add(pedido.getId()));
+			ra.addFlashAttribute("novosPedidosIds", novosPedidosIds);
 			return "redirect:/fornecedor";
 		} catch (HttpStatusCodeException err) {
 			System.err.println("ErrCode: "+ err.getStatusCode());

@@ -43,7 +43,7 @@
 			      <th>Endereço</th>
 			    </thead>
 	   			<th:block th:if="${!pedidos.isEmpty()}" th:each="pedido : ${pedidos}">
-	      			<tr class="text-center">
+	      			<tr class="text-center" th:classappend="${novosPedidosIds != null and #lists.contains(novosPedidosIds, pedido.id)}? table-success : ''">
 	         			<td th:text="${pedido.livro.titulo}">...</td>
 	         			<td style="width: 105px" th:text="'R$ '+ ${pedido.precoUnitario}">...</td>
 	         			<td style="width: 55px" th:text="${pedido.quantidade}">...</td>
