@@ -26,6 +26,10 @@ public class DiaService {
 		return hoje;
 	}
 	
+	public List<Dia> findTodosDias() {
+		return dias.findAll();
+	}
+	
 	public Dia save(Dia dia) {
 		return dias.saveAndFlush(dia);
 	}

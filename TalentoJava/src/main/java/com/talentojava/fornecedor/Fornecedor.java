@@ -14,7 +14,6 @@ import com.talentojava.pedido.Pedido;
 @Entity
 public class Fornecedor {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@OneToMany
 	private List<Pedido> pedidos;

@@ -10,4 +10,6 @@ import com.talentojava.dia.Dia;
 public interface DiaRepository extends JpaRepository<Dia, Long> {
 	@Query("SELECT d FROM Dia d WHERE d.hoje = true")
 	public List<Dia> findHoje();
+	
+	public List<Dia> findAll();
 }

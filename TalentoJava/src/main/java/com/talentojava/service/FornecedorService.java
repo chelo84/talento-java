@@ -17,6 +17,7 @@ public class FornecedorService {
 	public Fornecedor getFornecedor() {
 		if(!f.existsById(new Long("1"))) {
 			Fornecedor fornecedor = new Fornecedor();
+			fornecedor.setId(new Long("1"));
 			return f.save(fornecedor);
 		}
 		

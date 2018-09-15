@@ -1,6 +1,7 @@
 package com.talentojava.controller;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class VendaController {
 	private PedidoService pedidos;
 	@Autowired
 	private PedidoFormValidator validator;
+	private int dia = 0;
 	
 	@InitBinder("pedidoForm")
 	protected void initBinder(WebDataBinder binder) {
@@ -60,6 +62,12 @@ public class VendaController {
 	public String novoPedidoPage(Model model) {
 		model.addAttribute("pedidoForm", new PedidoForm()); 
 		return "novo-pedido.html";
+	}
+	
+	@GetMapping("todos-pedidos")
+	public String todosPedidosPage(Model model) {
+		model.addAttribute("diaCounter", 0);
+		return "todos-pedidos.html";
 	}
 	
 	@RequestMapping(value = "hoje/novo-pedido", method = RequestMethod.POST)
@@ -108,5 +116,11 @@ public class VendaController {
 	@ModelAttribute("pedidosDeHoje")
 	public List<Pedido> getPedidosDeHoje() {
 		return getHoje().getPedidos();
+	}
+	@ModelAttribute("dias")
+	public List<Dia> getTodosPedidos() {
+		List<Dia> tdsDias = dias.findTodosDias();
+		Collections.reverse(tdsDias);
+		return tdsDias;
 	}
 }
