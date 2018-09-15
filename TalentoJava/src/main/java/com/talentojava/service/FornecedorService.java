@@ -25,7 +25,8 @@ public class FornecedorService {
 	
 	public boolean addPedidos(List<Pedido> pedidos) {
 		Fornecedor fornecedor = this.getFornecedor();
-		
-		return fornecedor.addPedidos(pedidos);
+		boolean b = fornecedor.addPedidos(pedidos);
+		f.save(fornecedor);
+		return b;
 	}
 }

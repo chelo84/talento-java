@@ -1,5 +1,6 @@
 package com.talentojava.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -26,11 +28,17 @@ public class FornecedorController {
 	
 	@PostMapping("fornecedor/enviar-pedidos")
 	public ResponseEntity<String> enviarPedido(@RequestBody Dia dia) {
-		if(dia == null) System.err.println("NULL");
 		List<Pedido> pedidos = dia.getPedidos();
 		
 		if(f.addPedidos(pedidos)) return new ResponseEntity<>("Enviado", HttpStatus.OK);
 		
 		return new ResponseEntity<>("Não enviado", HttpStatus.BAD_REQUEST);
+	}
+	
+	@ModelAttribute("pedidos")
+	public List<Pedido> getPedidos() {
+		List<Pedido> pedidos = f.getFornecedor().getPedidos();
+		Collections.reverse(pedidos);
+		return pedidos;
 	}
 }
