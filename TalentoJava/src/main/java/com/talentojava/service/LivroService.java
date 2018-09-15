@@ -16,10 +16,10 @@ public class LivroService {
 	}
 
 	public boolean existe(Livro livro) {
-		return livros.findByTitulo(livro.getTitulo()).isPresent();
+		return !livros.findByTitulo(livro.getTitulo()).isEmpty();
 	}
 
 	public Livro find(Livro livro) {
-		return livros.findByTitulo(livro.getTitulo()).get();
+		return livros.findByTitulo(livro.getTitulo()).get(0);
 	}
 }

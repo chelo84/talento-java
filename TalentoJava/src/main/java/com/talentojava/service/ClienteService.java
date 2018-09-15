@@ -16,10 +16,10 @@ public class ClienteService {
 	}
 	
 	public boolean existe(Cliente cliente) {
-		return clientes.findByNomeAndSobrenome(cliente.getNome(), cliente.getSobrenome()).isPresent();
+		return !clientes.findByNomeAndSobrenome(cliente.getNome(), cliente.getSobrenome()).isEmpty();
 	}
 
 	public Cliente find(Cliente cliente) {
-		return clientes.findByNomeAndSobrenome(cliente.getNome(), cliente.getSobrenome()).get();
+		return clientes.findById(cliente.getId()).get();
 	}
 }

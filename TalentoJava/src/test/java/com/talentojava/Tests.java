@@ -2,39 +2,49 @@ package com.talentojava;
 
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.talentojava.cliente.Cliente;
+import com.talentojava.controller.FornecedorController;
+import com.talentojava.controller.VendaController;
 import com.talentojava.dia.Dia;
 import com.talentojava.livro.Livro;
 import com.talentojava.pedido.Pedido;
-import com.talentojava.repository.DiaRepository;
 import com.talentojava.service.ClienteService;
+import com.talentojava.service.DiaService;
 import com.talentojava.service.LivroService;
 import com.talentojava.service.PedidoService;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-public class ModelTests {
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+public class Tests {
 	@Autowired
-	LivroService livros;
+	private VendaController venda;
 	@Autowired
-	ClienteService clientes;
+	private FornecedorController fornecedor;
 	@Autowired
-	PedidoService pedidos;
+	private ClienteService clientes;
 	@Autowired
-	DiaRepository dias;
+	private PedidoService pedidos;
+	@Autowired
+	private LivroService livros;
+	@Autowired
+	private DiaService dias;
+	
+	@Test
+	public void controllersNotNull() {
+		assertTrue(venda != null && fornecedor != null);
+	}
 	
 	@Test
 	public void testAddLivro() {
@@ -52,6 +62,7 @@ public class ModelTests {
 		c.setSobrenome("Lacroix");
 		c.setTelefone("4812345678");
 		c.setEmail("marcelo_lacroix@hotmail.com");
+		c.setEndereco("Meu endereço");
 		clientes.novoCliente(c);
 		
 		assertTrue(clientes.existe(c));
@@ -98,9 +109,8 @@ public class ModelTests {
 			
 			pedidos.novoPedido(pedido);
 		}
-		List<Dia> hj = dias.findHoje();
-		Dia d = hj.get(hj.size()-1);
+		Dia hoje = dias.findHoje();
 		
-		assertThat(d.getPedidos().size(), is(5));
+		assertThat(hoje.getPedidos().size(), is(5));
 	}
 }

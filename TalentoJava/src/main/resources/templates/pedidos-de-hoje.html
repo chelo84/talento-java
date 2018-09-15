@@ -28,7 +28,6 @@
 
 		<div class="container text-center">
 			<h1 class="text-center" style="font-weight: bold">Pedidos de hoje</h1>
-			<p th:if="${novoPedido != null}" th:text=${novoPedido.id}></p>
 			<table class="table table-bordered table-hover">
 				<thead class="thead-dark"  style="border-width:5px;">
 			      <tr>
@@ -55,7 +54,7 @@
 	         			<td th:text="${pedido.cliente.endereco}">...</td>
 	      			</tr>
 	   			</th:block>
-				<tr th:if="${pedidosDeHoje.isEmpty()}">
+				<tr th:if="${pedidosDeHoje.isEmpty()}" th:classappend="${erroEnviar != null and erroEnviar == true} ? table-danger : ''">
 	   				<td class="text-center" colspan="7">Nenhum pedido atualmente</td>
 	   			</tr>
 	   			<tr>

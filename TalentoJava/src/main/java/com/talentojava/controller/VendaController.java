@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,7 @@ import com.talentojava.service.PedidoService;
 import com.talentojava.validator.PedidoFormValidator;
 
 @Controller
+@PropertySource("classpath:application.properties")
 @RequestMapping()
 public class VendaController {
 	@Autowired
@@ -47,7 +50,8 @@ public class VendaController {
 	private PedidoService pedidos;
 	@Autowired
 	private PedidoFormValidator validator;
-	private int dia = 0;
+	@Autowired
+	private Environment environment;
 	
 	@InitBinder("pedidoForm")
 	protected void initBinder(WebDataBinder binder) {
@@ -76,7 +80,6 @@ public class VendaController {
 		if (result.hasErrors()) {
 			return "novo-pedido.html";
 		}
-		
 		Livro l = new Livro();
 		l.setTitulo(pedidoForm.getTitulo());
 		l = livros.novoLivro(l);
@@ -100,7 +103,8 @@ public class VendaController {
 		HttpEntity<Dia> request = new HttpEntity<>(hoje);
 		ResponseEntity<String> response = null;
 		try {
-			response = rt.exchange("http://localhost:8080/fornecedor/enviar-pedidos", HttpMethod.POST, request, String.class);
+			int port = Integer.parseInt(environment.getProperty("local.server.port"));
+			response = rt.exchange("http://localhost:"+ port +"/fornecedor/enviar-pedidos", HttpMethod.POST, request, String.class);
 			hoje.setHoje(false);
 			dias.save(hoje);
 			
@@ -109,7 +113,7 @@ public class VendaController {
 			ra.addFlashAttribute("novosPedidosIds", novosPedidosIds);
 			return "redirect:/fornecedor";
 		} catch (HttpStatusCodeException err) {
-			System.err.println("ErrCode: "+ err.getStatusCode());
+			ra.addFlashAttribute("erroEnviar", true);
 		}
 		
 		return "redirect:/";
