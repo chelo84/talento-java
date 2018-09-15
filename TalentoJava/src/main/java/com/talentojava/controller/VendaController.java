@@ -96,6 +96,7 @@ public class VendaController {
 		return "redirect:/";
 	}
 	
+	//Este método simula o envio dos pedidos ao fornecedor através de uma Chamada Post
 	@RequestMapping(value = "hoje/enviar-pedidos", method = RequestMethod.POST)
 	public String enviarPedidos(RedirectAttributes ra) {
 		Dia hoje = this.getHoje();

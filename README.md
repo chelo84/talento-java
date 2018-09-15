@@ -1,37 +1,32 @@
-# Bem vindo ao teste de JAVA da Adsim
+﻿# Teste Java Adsim
 
-Objetivo deste teste é medir seu conhecimento sobre a plataforma JAVA bem como boas práticas com essa tecnoligia.
+Solução desenvolvida em Java com a ferramenta Spring Boot.
+Servidor Apache Tomcat que já está embutido no Spring Boot.
+Persistência implementada utilizando H2, uma *in-memory database* embutida na ferramenta, pelo fato do Spring Boot possibilitar rodar a aplicação sem instalar anteriormente um banco de dados de terceiro.
 
-## O que você deve fazer?
+## O que é necessário para executar o código
 
-Queremos que você elabore uma solução para o problema do nosso vendedor Samwell Tarly.
+* É necessária uma variável de ambiente de sistema chamada `JAVA_HOME` e com o valor o caminho da JDK (Não JRE), exemplo 'C:\Program Files\Java\jdk1.8.0_101'.
 
-## Problema
-Samwell é um vendedor muito hábil. Bate de porta em porta para oferecer livros (dentre tantos outros, seu campeão de vendas chama-se “As Crônicas de Gelo e Fogo”). A cada venda, Samwell pega seu caderninho amarelo e anota o pedido do cliente com o título do livro, quantidade, valor e os dados do cliente que fechou o negócio.
+* Para rodar a aplicação é necessário ter o Apache Maven instalado no computador, segue abaixo como instalá-lo:
+-- Clone o repositório ou faça o download em zip e extraia para a pasta que desejar
+-- Abra uma janela de comando e dê `cd` até a pasta ‘..\talento-java\TalentoJava\’
+-- Digite `mvnw clean install` e dê enter, isso irá fazer com que o maven seja instalado e todas as dependências necessárias sejam instaladas e fará a construção do arquivo executável do programa
 
-Ao final do dia Samwell junta suas anotações, preenche seu fichário e envia todos os pedidos para o fornecedores (sim, por fax 😱). Um belo dia, Samwell salvou a vida do CEO de uma empresa de software chamada Adsim (sem detalhes agora) e como prova de gratidão a empresa resolver ajudar o bravo vendedor de livros com um sistema que automatizasse seus pedidos de compra. 
+## Como executar a aplicação
 
-## Desafio
+* Clone o repositório ou faça o download em zip e extraia para a pasta que desejar
 
-Utilizando tecnologias JAVA, desenvolva um sistema web com o proposito de ajudar Samwell a enviar seus pedidos de compra para o fornecedor de livros.
+* Se você ainda não tiver feito os comandos do maven mostrados a cima:
+    * Abra uma janela de comando e dê `cd` até a pasta ‘..\talento-java\TalentoJava\’
+    * Digite `mvnw clean install` e dê enter, isso irá fazer com que o maven seja instalado e todas as dependências necessárias sejam instaladas e fará a construção do arquivo executável do programa
 
-## Será analisado
+* Abra uma janela de comando e dê `cd` até a pasta ‘..\talento-java\TalentoJava\target\’
 
-- Orientação a Objeto
-- Coesão
-- Como você estrutura e resolve problemas
-- Quais padrões de projetos utilizados e boas práticas
-- Layout de fácil utilização
-- Tecnologias envolvidas
+* Digite `java -jar TalentoJava-1.0.0.jar` e dê enter, isso irá fazer com que o servidor tomcat embutido no Spring Boot seja inicializado e rode o programa (Uma outra maneira de rodar a aplicação é utilizar o comando `mvn spring-boot:run` no lugar do `mvn clean install`, isso fará a aplicação rodar direto sem precisar do comando do java)
 
-### Observação
-Tecnologias atuais serão diferenciais na avaliação do seu projeto.
+* Abra o navegador de sua escolha e vá a url `localhost:8080/`
 
+* Pronto, adicione os livros vendidos e então, no final do dia, faça o envio deles ao fornecedor.
 
-### Como fazer
-
-- Clone nosso repositório git (não faça Fork!)
-- Desenvolva o código em sua máquina local
-- Suba o código em seu repositório no Github
-- Envie o link do seu repositório para jonsnow@adsim.com.br
-- Caso não saiba como trabalhar com o Git, Envie um zip do seu código para joffrey@adsim.com.br
+* Você pode navegar pelo sistema através da barra de navegação no topo da página.
