@@ -31,5 +31,8 @@ public class ClienteValidator implements Validator{
 		if(!emailValidator.valid(cli.getEmail())){
 			errors.rejectValue("cliente.email", "Invalid.cliente.email");
 		}
+		if(!cli.getTelefone().matches("\\d{1,}")) {
+			errors.rejectValue("cliente.telefone", "OnlyDigits.cliente.telefone");
+		}
     }
 }

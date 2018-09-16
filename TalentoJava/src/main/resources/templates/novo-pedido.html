@@ -43,7 +43,7 @@
 			  	<p th:if="${#fields.hasErrors('sobrenome')}" th:errors="*{sobrenome}" class="text-danger"></p>
 			  	<input type="text" th:field="*{sobrenome}" name="sobrenome" class="form-control" placeholder="Sobrenome" aria-label="Sobrenome">
 			  	<p th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}" class="text-danger"></p>
-			  	<input type="text" th:field="*{telefone}" name="telefone" class="form-control" placeholder="Telefone" aria-label="Telefone">
+			  	<input type="number" th:field="*{telefone}" name="telefone" class="form-control" placeholder="Telefone" aria-label="Telefone">
 			  	<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
 			  	<input type="text" th:field="*{email}" name="email" class="form-control" placeholder="Email" aria-label="Email">
 			  	<p th:if="${#fields.hasErrors('endereco')}" th:errors="*{endereco}" class="text-danger"></p>
