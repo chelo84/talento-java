@@ -12,14 +12,16 @@ public class ClienteService {
 	ClienteRepository clientes;
 	
 	public Cliente novoCliente(Cliente cliente) {
-		return clientes.saveAndFlush(cliente);
+		Cliente c = (existe(cliente))? find(cliente): cliente;
+		c = clientes.save(c);
+		return c;
 	}
 	
 	public boolean existe(Cliente cliente) {
-		return !clientes.findByNomeAndSobrenome(cliente.getNome(), cliente.getSobrenome()).isEmpty();
+		return clientes.findByNomeAndSobrenomeAndTelefone(cliente.getNome(), cliente.getSobrenome(), cliente.getTelefone()).isPresent();
 	}
 
 	public Cliente find(Cliente cliente) {
-		return clientes.findById(cliente.getId()).get();
+		return clientes.findByNomeAndSobrenomeAndTelefone(cliente.getNome(), cliente.getSobrenome(), cliente.getTelefone()).get();
 	}
 }
